@@ -1,0 +1,326 @@
+[app]
+
+app_name = "polaris-iaas"
+env = "dev"
+debug = false
+# 如果不设置则不会创建 pidfile
+pidfile = "/var/run/polaris-iaas.pid"
+
+# 是否开启http服务
+http_enable = true
+# http服务地址
+http_addr = ":8294"
+# http服务关闭最大等待时长, 秒
+http_stop_time_wait = 10
+
+# 统计图
+statsviz_addr = ":18294"
+
+# http ssl config
+# http_ssl_on = true
+# http_cert_file = "./yourdomain.crt"
+# http_key_file = "./yourdomain.key"
+
+# cors 跨域
+# http_cors_allow_all_origins = true
+# http_cors_allow_origins = []
+# http_cors_allow_methods = ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"]
+# http_cors_allow_headers = ["Origin", "Content-Length", "Content-Type"]
+# http_cors_expose_headers = []
+# http_cors_allow_credentials = true
+# http_cors_max_age = "12h"
+
+# gzip 模式 1:Default, 2:Best Speed, 3:Best Compression
+http_gzip_on = false
+# http_gzip_level = 1
+
+# pprof route: /debug/pprof
+http_pprof_on = true
+
+# 开启 http 业务请求日志
+# http_bizlog_on = true
+
+# http html 模版配置
+# http_view_render = true
+# http_view_path = "views/*"
+# http_static_path = "static/js"
+
+# 是否开启rpc服务
+rpc_enable = false
+# rpc服务地址
+rpc_addr = ":50094"
+# rpc服务关闭最大等待时长, 秒
+rpc_stop_time_wait = 10
+# rpc reflection
+# rpc_reflect_on = true
+
+# rpc ssl config
+# rpc_ssl_on = true
+# rpc_cert_file = "./conf/server.pem"
+# rpc_key_file = "./conf/server.key"
+
+# 是否开启task任务
+task_enable = false
+# http服务关闭最大等待时长, 秒
+task_stop_time_wait = 10
+
+##########################################
+#  以下自定义配置区
+##########################################
+
+project_unknown_id = 13198
+project_showall_id = 13198
+project_feiteng_ids = [12278]
+
+windows_pass = "administrator"
+kylin_pass = "Pass4root <br/>Pas4cloud"
+linux_pass = "Pas4root"
+
+image_make_allow_size = 100
+
+# 探测云主机网络状态的任务机
+ping_task_host = "web02v.yaq.shyc3.qianxin-inc.cn"
+
+# 故障 region
+down_regions = ["shanghai"]
+#down_azs = ["bjzt"]
+
+##########################################
+# 以下是组件区
+##########################################
+
+[logger]
+# json | text, default json
+formatter = "json"
+# 日志最低等级 Panic = 0, Fatal = 1, Error = 2, Warn = 3, Info = 4, Debug = 5, Trace = 6
+level = 5
+# 文件路径
+file_path = "./logs/app.log"
+# 最大保留的备份数
+max_backups = 20
+# 日志最大保留天数
+max_age = 30
+# 文件最大大小(mb)
+max_size = 500
+# 是否开启压缩
+compress = true
+# write log to stdout
+stdout_enable = false
+
+[db]
+host = "mysql11593w.yun.qianxin-inc.cn"
+user = "polaris"
+password = "1281d22ceaf98387"
+port = "11593"
+database = "polaris_iaas"
+prefix = ""
+timezone = "Asia/Shanghai"
+charset = "utf8"
+max_life_time = 8
+max_idle_conn = 20
+max_open_conn = 149
+show_log = true
+
+[redis]
+addr = "10.249.172.203:6379"
+auth = "cu*aP?YEphA2"
+db = 3
+max_idle = 500
+idle_timeout = 30
+max_active = 0
+
+[locker]
+driver = "redis"
+driver_instance_id = "redis"
+
+[mongodb]
+# https://docs.mongodb.com/manual/reference/connection-string/
+mongodb_uri = "mongodb://user:password@127.0.0.1:27017/?connectTimeoutMS=5000&socketTimeoutMS=5000&maxPoolSize=100"
+database = "test"
+
+[kafka]
+cluster = "127.0.0.1:9092"
+topic = "demo"
+topic_cloud = "cloud"
+
+[etcd]
+endpoints = ["127.0.0.1:2379"]
+dial_timeout = 2
+# username = ""
+# password = ""
+# max_call_recv_msgsize_byte = 0  # default 2 * 1024 * 1024
+# max_call_send_msgsize_byte = 0  # default math.MaxInt32
+# cert_file = "conf/ssl/etcd_cert.pem"
+# cert_key_file = "conf/ssl/etcd_cert_key.pem"
+# cert_ca_file = "conf/ssl/etcd_ca.pem"
+
+
+##########################################
+# 以下是 模块配置 区
+##########################################
+[k8s_module.ceph_task_host_map]
+bjzt = "alkaid-ceph"
+
+
+[servers_module]
+qiyun_vm_mem_identifier = "qiyun_vm_mem"
+qiyun_vm_cpu_identifier = "qiyun_vm_cpu"
+qiyun_vm_identifier = "qiyun_vm"
+expire_email_receiver = ["g-sre@qianxin.com", "g-sa@qianxin.com"]
+base_volume_identifier = "clouddisk_hdd"
+performance_volume_identifier = "clouddisk_ssd"
+free_server_link = "/user/ecs/freeServices"
+
+
+[volume_module]
+volume_pool_alert_usage = 0.9
+volume_pool_alert_subscription_ratio = 2
+base_volume_identifier = "clouddisk_hdd"
+performance_volume_identifier = "clouddisk_ssd"
+
+[s3]
+endpoint = "https://oss-zz-zzt.yun.qianxin-inc.cn:443" # s3 域名
+access_key = "AK5A5VDGKNKJITG85O1Z"
+secret_key = "SYgdEQHbfnd9bLHZXcBx8RipPlXiKlMBWxiJiKgg"
+bucket = "polaris-iaas-image"
+region = "zhengzhou"
+
+##########################################
+# 以下是 api 区
+##########################################
+
+[polaris_center_api]
+address = "http://127.0.0.1:8091"
+hostname = ""
+timeout = 30
+# max_recv_msgsize_mb =  10
+# max_send_msgsize_mb =  10
+# ssl_on = true
+# cert_file = "./conf/server.pem"
+
+# @TODO 与 polaris-center 合并
+[center_api]
+address = "http://127.0.0.1:8091"
+hostname = ""
+timeout = 10
+
+[polaris_db_api]
+address = "http://127.0.0.1:8093"
+hostname = ""
+timeout = 10
+# max_recv_msgsize_mb =  10
+# max_send_msgsize_mb =  10
+# ssl_on = true
+# cert_file = "./conf/server.pem"
+
+[polaris_iaas_api]
+address = "http://127.0.0.1:8094"
+
+[polaris_workflow_api]
+address = "http://127.0.0.1:8092"
+hostname = ""
+timeout = 10
+
+# @TODO 与 polaris-db 合并
+[db_api]
+address = "http://127.0.0.1:8093"
+hostname = ""
+timeout = 10
+
+[cmdb_api]
+address = "https://cmdb.ops.qianxin-inc.cn"
+token = "fd3cf7a461"
+loop_sleep = 180
+
+[pflow_api]
+address = "http://test.pflow.qianxin-inc.cn"
+ticketToken = "1d0949d1b6693193da2dfdc9cca7c929"
+
+[dns_api]
+address = "https://ticket.ops.qianxin-inc.cn"
+token = "1d0949d1b6693193da2dfdc9cca7c929"
+timeout = 10
+disable_mock = false
+
+#奇云OpenStack
+[openstack_qiyun]
+identity_endpoint = "http://api-keyse-shyc3-qiyun.qianxin-inc.cn:35357/v2.0/"
+user = "admin"
+password = "verybadpass"
+tenantID = "2f7e7491307e45a79a9be01e6fe3a614"
+project_id_test = 12278
+
+[openstack_hanhaiyun_api]
+address = "http://keystone-testenv.yun.qianxin-inc.cn:5000"
+user = "admin"
+password = "openstackAdmin"
+tenant_id = "e93293733175465bbc00ccdf40a6f7b0"
+domain_name = "Default"
+conn_timeout = 30
+timeout = 30
+
+[acl_api]
+address = "https://10.95.57.233:8443"
+hostname = "secnet.b.qianxin-inc.cn"
+timeout = 10
+max_recv_msgsize_mb = 10
+max_send_msgsize_mb = 10
+token = "Token e4df6b07c4df94bc8055dd1ceece6516d7f7df97"
+
+[goku_api]
+address = "http://10.249.104.116:5010"
+timeout = 30
+key = "gokuready"
+salt = "goku"
+
+
+
+[monitor_api]
+#address = "http://10.46.36.23:30003"
+address = "http://prom-zll.yun.qianxin-inc.cn"
+#address = "http://thanos-query-zll.yun.qianxin-inc.cn/"
+username = "admin"
+password = "hhy"
+
+# 不同的 region 有不同的 api，不过 region 不多，就写配置文件了
+[rancher_api.Beijing3]
+address = "https://eks-dev.yun.qianxin-inc.cn"
+username = "Admin"
+password = "Qianxin@2021"
+token = "token-mwj6j:lfhcflrksth6n8jpnbm5ss655sgp5ccp82sf8g7b6678d972zvnvcb"
+
+[yapi_api]
+address = "http://yapi.yun.qianxin-inc.cn"
+token = "2d32764f4a19afd0d2d1eacdb09be839c6eae5cea987d4c0838328984d3d4772"
+
+[vm_rollback_migrate]
+endpoint = "sceph02.cpp.zzt.MzYwZXM=.cn"
+
+[volume_pool_sync_host]
+hostname = "centos701v.jl.bjzt.qianxin-inc.cn"
+
+[s3acl_api]
+address = "http://osstest01v.rgw.zzt.qianxin-inc.cn"
+api_key = "edd1c9f034335f136f87ad84b625c8f1"
+
+[doris_api]
+address = "http://dev02.ops.lfk.qianxin-inc.cn:18081"
+timeout = 10
+d_token = "hKuNeduD5xpp7Wkc"
+
+[temporary_internet_access]
+address = "https://secnet.b.qianxin-inc.cn:8443"
+token = "fe90719c6fa278d7ea42f15972cfa12939bae33f"
+tls_skip_verify = true
+
+[ipa_api]
+app_name = "hhy_sys"
+key = "rytIbja1cFIDuwN89g9Rl33v"
+address = "http://10.95.58.204"
+tls_skip_verify = true
+
+[alkaid_api]
+address = "https://alkaid-test.yun.qianxin-inc.cn:14280"
+tls_skip_verify = true
+username = "admin"
+password = "alkaid123"
